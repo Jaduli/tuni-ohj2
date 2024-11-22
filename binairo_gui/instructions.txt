@@ -1,0 +1,27 @@
+Cat & Dog Binairo
+
+Ohjelma toimii binairon säännöillä, mutta ykkösten sijaan käytetään koiria ja nollien sijaan kissoja. Kahta enempää samaa eläintä ei saa olla peräkkäin ja jokaisella pysty- ja vaakarivillä tulee olla sama määrä kissoja ja koiria.
+
+Pelin voi aloittaa syöttämällä "Input values" -tekstikenttään siemenluvun random fill -toimintoa varten tai luomalla laudan itse syötteellä käyttäen nollia, ykkösiä ja välilyöntejä ympäröiden ne ""-merkeillä ja painamalla fill input -painiketta. Syötteessä tulee olla laudan koon mukaan merkkejä.
+Esimerkkisyötteitä koon 3 (6x6) laudalle:
+"   1       0    0 0  00   1  1      "
+"   11  00   00          1  0       1"
+
+Pelissä on myös hard mode, jossa virheellinen lisäys päättää pelin. Hard moden voi laittaa päälle pelin käynnistyttyä tai laudan resetoinnin jälkeen. 
+
+Pelin kuvat ovat itsetehtyjä. 
+
+Lisäominaisuudet:
+(10p) Pelimerkit on toteutettu kuvina (kissat ja koirat + pääkallo hard modessa)
+
+(5p) Käyttäjä voi asettaa laudan koon käyttöliittymässä spinboxin avulla pelin alussa tai laudan resetoinnin jälkeen (peruskoot 1-5. Yläraja on muokattavissa mainwindow.hh tiedoston riviltä 26. Laudan sivun pituus on 2 kertaa laudan koon arvo.)
+
+(15p) Peli antaa tehdä virheellisen lisäyksen, mutta ruutu ilmaisee virheen punaisella. Lisäys poistuu itsestään toisen lisäyksen tehdessä. Hard modessa virheellinen lisäys päättää pelin.
+
+(15p) Pelissä on pistelasku, joka määräytyy laudan koon ja käytetyn ajan perusteella. Jos hard mode on päällä, saa 50% enemmän pisteitä normaalimodeen verrattuna. Pisteet kasautuvat nopeasti laudan koon kasvaessa, mutta myös ratkaisuun käytettävä aika pitenee. Pisteenlasku nähtävissä mainwindow.cpp funktiosta game_won().
+Pisteet = 5 * 10 ^ (laudan koko) / käytetty aika (* 3/2).
+Paras pistemäärä tallentuu ja on nähtävissä game info -painikkeen avulla.
+
+(10p) Pelissä on pause-nappula, jolla ajanoton saa pysäytettyä. 
+
+(5p) Käyttöliittymän taustaväri muuttuu pelin loputtua keltaiseksi voitossa ja punaiseksi häviössä (hard modessa). Taustaväri poistuu laudan resetoinnin jälkeen. 

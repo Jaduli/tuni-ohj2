@@ -1,3 +1,13 @@
+/* Ohjelman kirjoittaja
+ * Pohjakoodi: TUNI COMP.CS.110
+ * Kevät 2024
+ *
+ * Nimi: Jade Pitkänen
+ * Opiskelijanumero: 151842146
+ * Käyttäjätunnus: kcjapi
+ * Sähköposti: jade.pitkanen@tuni.fi
+ */
+
 #ifndef GAMEBOARD_HH
 #define GAMEBOARD_HH
 
@@ -7,11 +17,6 @@
 // Pelilaudan alkioiden tyyppi.
 // Type of the elements in the gameboa
 enum Element_type {ZERO, ONE, EMPTY};
-
-// Vakiot pelilaudan koon määrittelemiseen.
-// Constants for the size of the gameboard.
-const int NUMBER_OF_SYMBOLS = 4;
-const int SIZE = 2 * NUMBER_OF_SYMBOLS;
 
 // Vakio todennäköisyysjakauman ylärajaa varten.
 // Nollilla ja ykkösillä on sama todennäköisyys, vaikkapa x, ja tyhjien
@@ -34,6 +39,16 @@ public:
     // Rakentaja.
     // Constructor. Calls init() to fill the board with EMPTYs.
     GameBoard();
+    GameBoard(unsigned int symbols);
+
+    // Asettaa laudalle koon
+    // @param symbols = symbolien määrä
+    // koko = 2 * symbolien määrä
+    void set_size(unsigned int symbols);
+
+    // Palautaa laudan koon (size)
+    // Voidaan käyttää tekstimuotoisessa pelissä SIZE-vakion sijaan
+    unsigned int get_size();
 
     // Fills the gameboard randomly with three symbols (ZERO, ONE, EMPTY)
     // such that every fourth element is non-empty.
@@ -73,6 +88,10 @@ public:
     // Prints the gameboard.
     void print() const;
 
+    // Palauttaa pelilaudan elementtivektorin
+    std::vector<std::vector<Element_type>> get_board();
+
+
 private:
     // Inits the gameboard, i.e. fills it with EMPTYs.
     void init();
@@ -93,6 +112,10 @@ private:
 
     // Gameboard
     std::vector<std::vector<Element_type>> board_;
+
+    // Arvot pelilaudan koon määrittelemiseen.
+    unsigned int number_of_symbols_ = 4;
+    unsigned int size_ = 2 * number_of_symbols_;
 
     // Ratkaisemattoman pelilaudan tuottavat siemenluvut väliltä [1..50].
     // A list of seed values from [1..50] that produce non-solvable gameboard.

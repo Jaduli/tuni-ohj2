@@ -1,10 +1,36 @@
+/* Ohjelman kirjoittaja
+ * Pohjakoodi: TUNI COMP.CS.110
+ * Kevät 2024
+ *
+ * Nimi: Jade Pitkänen
+ * Opiskelijanumero: 151842146
+ * Käyttäjätunnus: kcjapi
+ * Sähköposti: jade.pitkanen@tuni.fi
+ */
+
 #include "gameboard.hh"
 #include <iostream>
 #include <random>
 
-GameBoard::GameBoard()
-{
+GameBoard::GameBoard() {
     init();
+}
+
+GameBoard::GameBoard(unsigned int symbols)
+{
+    set_size(symbols);
+    init();
+}
+
+void GameBoard::set_size(unsigned int symbols)
+{
+    number_of_symbols_ = symbols;
+    size_ = number_of_symbols_ * 2;
+}
+
+unsigned int GameBoard::get_size()
+{
+    return size_;
 }
 
 bool GameBoard::fill_randomly(unsigned int seed)
@@ -24,7 +50,7 @@ bool GameBoard::fill_randomly(unsigned int seed)
     std::uniform_int_distribution<unsigned int> distr(0, DISTR_UPPER_BOUND);
     std::string input = "";
 
-    for(unsigned int i = 0; i < SIZE * SIZE; ++i)
+    for(unsigned int i = 0; i < size_ * size_; ++i)
     {
         switch(distr(eng))
         {
@@ -41,18 +67,18 @@ bool GameBoard::fill_randomly(unsigned int seed)
 
 bool GameBoard::fill_from_input(const std::string &input)
 {
-    // Checking the size (assuming that input is enclosed with quote marks)
-    if(input.size() != SIZE * SIZE + 2)
+    // Checking the size_ (assuming that input is enclosed with quote marks)
+    if(input.size() != size_ * size_ + 2)
     {
-        std::cout << "Wrong size of input" << std::endl;
+        std::cout << "Wrong size_ of input" << std::endl;
         return false;
     }
 
     // Removing quote marks
-    std::string actual_input = input.substr(1, SIZE * SIZE);
+    std::string actual_input = input.substr(1, size_ * size_);
 
     // Checking the content and moving each element on the gameboard
-    for(unsigned int i = 0; i < SIZE * SIZE; ++i)
+    for(unsigned int i = 0; i < size_ * size_; ++i)
     {
         Element_type current_element = EMPTY;
         switch(actual_input.at(i))
@@ -63,7 +89,7 @@ bool GameBoard::fill_from_input(const std::string &input)
         default: std::cout << "Wrong character" << std::endl; return false;
         }
 
-        board_.at(i / SIZE).at(i % SIZE ) = current_element;
+        board_.at(i / size_).at(i % size_ ) = current_element;
     }
     if(ok_adjacent_symbols() and ok_amount_of_symbols())
     {
@@ -112,10 +138,10 @@ bool GameBoard::ok_amount_of_symbols() const
                 ++ones_in_column;
             }
         }
-        if(zeros_in_row > NUMBER_OF_SYMBOLS or
-           ones_in_row > NUMBER_OF_SYMBOLS or
-           zeros_in_column > NUMBER_OF_SYMBOLS or
-           ones_in_column > NUMBER_OF_SYMBOLS)
+        if(zeros_in_row > number_of_symbols_ or
+           ones_in_row > number_of_symbols_ or
+           zeros_in_column > number_of_symbols_ or
+           ones_in_column > number_of_symbols_)
         {
             return false;
         }
@@ -174,12 +200,12 @@ void GameBoard::print() const
 {
     // Tulostetaan yläreuna
     // Printing upper border
-    print_line(LEFT_COLUMN_WIDTH + 1 + 2 * SIZE + 1, '=');
+    print_line(LEFT_COLUMN_WIDTH + 1 + 2 * size_ + 1, '=');
 
     // Tulostetaan otsikkorivi
     // Printing title row
     std::cout << "|   | ";
-    for(unsigned int i = 0; i < SIZE; ++i)
+    for(unsigned int i = 0; i < size_; ++i)
     {
         std::cout << i + 1 << " ";
     }
@@ -187,14 +213,14 @@ void GameBoard::print() const
 
     // Tulostetaan viiva otsikkorivin alle
     // Printing line after the title row
-    print_line(LEFT_COLUMN_WIDTH + 1 + 2 * SIZE + 1, '-');
+    print_line(LEFT_COLUMN_WIDTH + 1 + 2 * size_ + 1, '-');
 
     // Tulostetaan pelilaudan varsinainen sisältö
     // Printing the actual content of the gameboard
-    for(unsigned int i = 0; i < SIZE; ++i)
+    for(unsigned int i = 0; i < size_; ++i)
     {
         std::cout << "| " << i + 1 << " | ";
-        for(unsigned int j = 0; j < SIZE; ++j)
+        for(unsigned int j = 0; j < size_; ++j)
         {
             switch(board_.at(i).at(j))
             {
@@ -208,13 +234,18 @@ void GameBoard::print() const
 
     // Tulostetaan alareuna
     // Printing lower border
-    print_line(LEFT_COLUMN_WIDTH + 1 + 2 * SIZE + 1, '=');
+    print_line(LEFT_COLUMN_WIDTH + 1 + 2 * size_ + 1, '=');
+}
+
+std::vector<std::vector<Element_type> > GameBoard::get_board()
+{
+    return board_;
 }
 
 void GameBoard::init()
 {
-    std::vector<Element_type> row(SIZE, EMPTY);
-    for(unsigned int i = 0; i < SIZE; ++i)
+    std::vector<Element_type> row(size_, EMPTY);
+    for(unsigned int i = 0; i < size_; ++i)
     {
         board_.push_back(row);
     }
