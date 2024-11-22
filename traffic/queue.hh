@@ -52,7 +52,6 @@ private:
     // the same green period
     unsigned int cycle_;
 
-    // You can define more private features here
     bool dequeue();
 
 };
