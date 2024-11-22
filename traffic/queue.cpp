@@ -3,8 +3,6 @@
 
 using namespace std;
 
-// Implement the member functions of Queue here
-
 Queue::Queue(unsigned int cycle): first_(nullptr), last_(nullptr) {
     cycle_ = cycle;
 }
